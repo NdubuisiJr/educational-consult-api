@@ -18,8 +18,8 @@ namespace EducationalConsultAPI {
             // migrate the database.  Best practice = in Main, using service scope
             using (var scope = host.Services.CreateScope()) {
                 try {
-                    //var context = scope.ServiceProvider.GetService<EducationalDbContext>();
-                    //context.Database.Migrate();
+                    var context = scope.ServiceProvider.GetService<EducationalDbContext>();
+                    context.Database.Migrate();
                 }
                 catch (Exception ex) {
                     var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();

@@ -11,10 +11,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20210506133719_initial.cs" />
+    <Compile Remove="Migrations\20210506133719_initial.Designer.cs" />
+    <Compile Remove="Migrations\20210506140350_initial.cs" />
+    <Compile Remove="Migrations\20210506140350_initial.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="AutoMapperProfiles\" />
-    <Folder Include="Models\" />
-    <Folder Include="Repositories\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
   <ItemGroup>
