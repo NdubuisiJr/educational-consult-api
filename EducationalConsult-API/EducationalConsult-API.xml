@@ -4,49 +4,122 @@
         <name>EducationalConsult-API</name>
     </assembly>
     <members>
-        <member name="T:EducationalConsultAPI.Dtos.UserDto">
+        <member name="M:EducationalConsultAPI.Controllers.FileUploadController.UploadImage(System.Guid,EducationalConsultAPI.Dtos.FileUpload)">
             <summary>
-            The structure of a returned user
+            Uploads user's profile picture
+            </summary>
+            <param name="userId">User's Id</param>
+            <param name="upload">The uploaded form</param>
+            <returns></returns>
+        </member>
+        <member name="M:EducationalConsultAPI.Controllers.LoginController.Login(EducationalConsultAPI.Dtos.UserLogin)">
+            <summary>
+            Performs user authentication and returns an authentication token
+            </summary>
+            <param name="login">The login object</param>
+            <returns></returns>
+        </member>
+        <member name="M:EducationalConsultAPI.Controllers.SignupController.Verify(System.String,System.String)">
+            <summary>
+            Verifies a user's email
+            </summary>
+            <param name="verification">The verification code sent to the user's email</param>
+            <param name="email">The user's email address</param>
+            <returns></returns>
+        </member>
+        <member name="M:EducationalConsultAPI.Controllers.SignupController.Signup(EducationalConsultAPI.Dtos.UserRegistration)">
+            <summary>
+            Register's a new user
+            </summary>
+            <param name="userRegistration">Manages the entire required field</param>
+            <returns></returns>
+        </member>
+        <member name="T:EducationalConsultAPI.Dtos.UserLogin">
+            <summary>
+            Login structure
             </summary>
         </member>
-        <member name="P:EducationalConsultAPI.Dtos.UserDto.Id">
+        <member name="P:EducationalConsultAPI.Dtos.UserLogin.Email">
             <summary>
-            The user's Id
+            User's email required
             </summary>
         </member>
-        <member name="P:EducationalConsultAPI.Dtos.UserDto.Surname">
+        <member name="P:EducationalConsultAPI.Dtos.UserLogin.Password">
+            <summary>
+            User's Password. Of course it is required
+            </summary>
+        </member>
+        <member name="T:EducationalConsultAPI.Dtos.UserRegistration">
+            <summary>
+            The fields for creating an account
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.UserRegistration.Surname">
+            <summary>
+            The user's Surname
+            </summary>
+            
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.UserRegistration.OtherNames">
+            <summary>
+            The user's other names
+            </summary>
+            
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.UserRegistration.Email">
+            <summary>
+            The user's email address
+            </summary>
+            
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.UserRegistration.Phone">
+            <summary>
+            The user's phone number.
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.UserRegistration.Password">
+            <summary>
+            The user's strong password
+            </summary>
+        </member>
+        <member name="T:EducationalConsultAPI.Dtos.UserResponse">
+            <summary>
+            The fields for creating an account
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.UserResponse.Id">
+            <summary>
+            The user's unique Id
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.UserResponse.Surname">
             <summary>
             The user's Surname
             </summary>
         </member>
-        <member name="P:EducationalConsultAPI.Dtos.UserDto.OtherNames">
+        <member name="P:EducationalConsultAPI.Dtos.UserResponse.OtherNames">
             <summary>
             The user's other names
             </summary>
         </member>
-        <member name="P:EducationalConsultAPI.Dtos.UserDto.Email">
+        <member name="P:EducationalConsultAPI.Dtos.UserResponse.Email">
             <summary>
             The user's email address
             </summary>
         </member>
-        <member name="P:EducationalConsultAPI.Dtos.UserDto.Phone">
+        <member name="P:EducationalConsultAPI.Dtos.UserResponse.Phone">
             <summary>
-            The user's phone number. In the nigerian format. without national code
+            The user's phone number.
             </summary>
         </member>
-        <member name="P:EducationalConsultAPI.Dtos.UserDto.VerificationCode">
+        <member name="P:EducationalConsultAPI.Dtos.UserResponse.ImageUrl">
             <summary>
-            The code used for verifying the user
+            The user's profile picture
             </summary>
         </member>
-        <member name="P:EducationalConsultAPI.Dtos.UserDto.Token">
+        <member name="P:EducationalConsultAPI.Dtos.UserResponse.Token">
             <summary>
-            The authentication token issued to the user
-            </summary>
-        </member>
-        <member name="P:EducationalConsultAPI.Dtos.UserDto.Role">
-            <summary>
-            The user's permissions
+            Authentication token
             </summary>
         </member>
     </members>

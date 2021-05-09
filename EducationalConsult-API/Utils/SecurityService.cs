@@ -1,5 +1,5 @@
-﻿using EducationalConsultAPI.Dtos;
-using EducationalConsultAPI.Interfaces;
+﻿using EducationalConsultAPI.Interfaces;
+using EducationalConsultAPI.Models;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -16,7 +16,7 @@ namespace EducationalConsultAPI.Utils {
             _appSettings = appSettings.Value;
         }
 
-        public string GenerateJwtToken(UserDto user) {
+        public string GenerateJwtToken(User user) {
             // generate token that is valid for 6 hours
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.SigningKey);
@@ -25,8 +25,7 @@ namespace EducationalConsultAPI.Utils {
                 {
                     new Claim(ClaimTypes.Name, user.Id.ToString())
                 }),
-                Expires = user.Role == Roles.Admin ? DateTime.UtcNow.AddHours(4) :
-                                    DateTime.UtcNow.AddHours(6),
+                Expires = DateTime.UtcNow.AddHours(4),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
                  SecurityAlgorithms.HmacSha256Signature)
             };

@@ -2,11 +2,11 @@
 
 namespace EducationalConsultAPI.Dtos {
     /// <summary>
-    /// The structure of a returned user
+    /// The returned user object
     /// </summary>
-    public class UserDto {
+    public class UserResponse {
         /// <summary>
-        /// The user's Id
+        /// The user's unique Id
         /// </summary>
         public Guid Id { get; set; }
 
@@ -26,23 +26,19 @@ namespace EducationalConsultAPI.Dtos {
         public string Email { get; set; }
 
         /// <summary>
-        /// The user's phone number. In the nigerian format. without national code
+        /// The user's phone number.
         /// </summary>
         public string Phone { get; set; }
 
         /// <summary>
-        /// The code used for verifying the user
+        /// The user's profile picture
         /// </summary>
-        public int VerificationCode { get; set; }
+        public string ImageUrl { get; set; }
 
         /// <summary>
-        /// The authentication token issued to the user
+        /// Authentication token
         /// </summary>
         public string Token { get; set; }
 
-        /// <summary>
-        /// The user's permissions
-        /// </summary>
-        public string Role { get; set; }
     }
 }

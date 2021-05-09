@@ -18,6 +18,9 @@ using EducationalConsultAPI.DBContext;
 using System.Reflection;
 using System.IO;
 using static EducationalConsultAPI.Utils.Constants;
+using EducationalConsultAPI.Models;
+using EducationalConsultAPI.Repositories;
+using Microsoft.Extensions.FileProviders;
 
 namespace EducationalConsultAPI {
     public class Startup {
@@ -40,6 +43,11 @@ namespace EducationalConsultAPI {
                 });
             });
 
+            //Add file upload service
+            services.AddSingleton<IFileProvider>(new PhysicalFileProvider(
+                Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"))
+            );
+
             //Add the use of controllers and views. Chain NewtonsoftJon and xml serializers
             services.AddControllersWithViews(setupAction => {
                 setupAction.Filters.Add(new ProducesResponseTypeAttribute(
@@ -53,7 +61,7 @@ namespace EducationalConsultAPI {
                 setupAction.Filters.Add(new ProducesAttribute(
                             APPLICATION_JSON, new string[] { APPLICATION_XML }));
                 setupAction.Filters.Add(new ConsumesAttribute(
-                            APPLICATION_JSON, new string[] { APPLICATION_XML}));
+                            APPLICATION_JSON, new string[] { APPLICATION_XML, MULTIPART_FORMDATA }));
 
                 setupAction.ReturnHttpNotAcceptable = true;
 
@@ -114,6 +122,10 @@ namespace EducationalConsultAPI {
                 options.UseNpgsql(_connectionString);
                 Console.WriteLine($"Using DB={_connectionString}");
             });
+            services.AddScoped<IRepository<User>, UserRepository>();
+            services.AddScoped<IRepository<Group>, GroupRepository>();
+            services.AddScoped<IJoinRepository<UserGroup>, UserGroupRepository>();
+            services.AddScoped<ICommunication, Communication>();
 
             //Add swagger setup
             services.AddSwaggerGen(setupAction => {
@@ -132,6 +144,7 @@ namespace EducationalConsultAPI {
                 var path = Path.Combine(AppContext.BaseDirectory, xmlDocFile);
                 setupAction.IncludeXmlComments(path);
             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

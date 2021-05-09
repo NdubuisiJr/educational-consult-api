@@ -3,6 +3,7 @@
         public const string SECRET = "Secret";
         public const string APPLICATION_JSON = "application/json";
         public const string APPLICATION_XML = "application/xml";
+        public const string MULTIPART_FORMDATA = "multipart/form-data";
         public const string APPLICATION_PROBLEM_JSON = "application/problem+json";
         public const string VALIDATION_ERROR_URL = "https://www.educationalconsult.com/api/modelvalidationproblem";
         public const string VALIDATION_ERROR_MESSAGE = "One or more model validation errors occurred.";
@@ -16,5 +17,7 @@
         public const string NAME = "Ndubuisi Jr Chukuigwe";
         public const string EXCEPTION_MESSAGE = "An unexpected fault happened. Try again later.";
         public const string SWAGGER_JSON_PATH = "/swagger/Docs/swagger.json";
+        public const string BACKEND_BASE_URL = "http://localhost:4000";
+        public const string FRONTEND_BASE_URL = "http://localhost:5000";
     }
 }
