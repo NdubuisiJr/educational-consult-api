@@ -124,6 +124,7 @@ namespace EducationalConsultAPI {
             });
             services.AddScoped<IRepository<User>, UserRepository>();
             services.AddScoped<IRepository<Group>, GroupRepository>();
+            services.AddScoped<IRepository<School>, SchoolRepository>();
             services.AddScoped<IJoinRepository<UserGroup>, UserGroupRepository>();
             services.AddScoped<ICommunication, Communication>();
 

@@ -25,5 +25,6 @@ namespace EducationalConsultAPI.DBContext {
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Group> Groups { get; set; }
         public virtual DbSet<UserGroup> UserGroups { get; set; }
+        public virtual DbSet<InvitedUser> InvitedUsers { get; set; }
     }
 }

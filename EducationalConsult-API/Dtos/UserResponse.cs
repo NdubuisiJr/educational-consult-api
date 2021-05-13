@@ -1,4 +1,6 @@
-﻿using System;
+﻿using EducationalConsultAPI.Models;
+using System;
+using System.Collections.Generic;
 
 namespace EducationalConsultAPI.Dtos {
     /// <summary>
@@ -40,5 +42,9 @@ namespace EducationalConsultAPI.Dtos {
         /// </summary>
         public string Token { get; set; }
 
+        /// <summary>
+        /// Collection of classes created by this user
+        /// </summary>
+        public IList<Class> Classes { get; set; }
     }
 }

@@ -19,6 +19,8 @@ namespace EducationalConsultAPI.Interfaces {
 
         void Delete(T item);
 
+        void DeleteRandom<TEntity>(Guid key) where TEntity : ModelBase => throw new NotImplementedException();
+
         void Delete(Guid id);
 
         bool SaveChanges();

@@ -40,5 +40,10 @@ namespace EducationalConsultAPI.Dtos {
         [Required]
         public string Password { get; set; }
 
+        /// <summary>
+        /// An optional redirect url
+        /// </summary>
+        public string Redirect { get; set; }
+
     }
 }

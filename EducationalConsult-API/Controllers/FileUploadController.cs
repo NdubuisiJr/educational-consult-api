@@ -28,6 +28,7 @@ namespace EducationalConsultAPI.Controllers {
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public IActionResult UploadImage([FromRoute]Guid userId, [FromForm]FileUpload upload) {
             try {
@@ -36,7 +37,7 @@ namespace EducationalConsultAPI.Controllers {
 
                 var user = _userRepository.Get(userId);
                 if (user is null)
-                    return BadRequest(new Response<object>(400, "No such user"));
+                    return NotFound(new Response<object>(404, "No such user"));
 
                 if (user.ImageUrl is { }) {
                     var exitingFile = Helpers.GetFilePath(user.ImageUrl);

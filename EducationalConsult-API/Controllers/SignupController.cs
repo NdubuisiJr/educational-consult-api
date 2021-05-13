@@ -86,22 +86,28 @@ namespace EducationalConsultAPI.Controllers {
                 user.PasswordSalt = passData.Item1;
                 user.PasswordHash = passData.Item2;
                 user.VerificationCode = verification;
+                if (!string.IsNullOrWhiteSpace(userRegistration.Redirect))
+                    user.IsVerified = true;
 
-                var url = $"{BACKEND_BASE_URL}/api/signup?verification={verification}&email={user.Email}";
-                var emailPath = Helpers.GetFilePath("/email.html");
-                var html = ReadAllText(emailPath);
-                html = html.Replace("{{action_url}}", url);
-                html = html.Replace("{{action_url}}", url);
-                html = html.Replace("{{action_url}}", url);
+                if (string.IsNullOrWhiteSpace(userRegistration.Redirect)) {
+                    var url = $"{BACKEND_BASE_URL}/api/signup?verification={verification}&email={user.Email}";
+                    var emailPath = Helpers.GetFilePath("/email.html");
+                    var html = ReadAllText(emailPath);
+                    html = html.Replace("{{action_url}}", url);
+                    html = html.Replace("{{action_url}}", url);
+                    html = html.Replace("{{action_url}}", url);
 
-                var result = _communication.SendEmail(user.Email, "Verify Email", html);
-                if (!result)
-                    return BadRequest(new Response<UserResponse>(400, "Unable to send verification email"));
+                    var result = _communication.SendEmail(user.Email, "Verify Email", html);
+                    if (!result)
+                        return BadRequest(new Response<UserResponse>(400, "Unable to send verification email"));
+                }
 
                 _userRepository.Add(user);
                 _userRepository.SaveChanges();
 
                 var userResponse = _mapper.Map<UserResponse>(user);
+                if (user.IsVerified)
+                    return Redirect(userRegistration.Redirect);
 
                 return Created("/api/login", new Response<UserResponse>(201, "Signup successful", userResponse));
             }

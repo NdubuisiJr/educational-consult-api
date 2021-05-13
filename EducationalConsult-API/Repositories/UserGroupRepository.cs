@@ -22,8 +22,9 @@ namespace EducationalConsultAPI.Repositories {
 
         public IQueryable<UserGroup> GetAll() {
             var set = _dbContext.Set<UserGroup>();
-            set.Include(x => x.User).Load();
-            set.Include(x => x.Group).Load();
+            set.Include(x => x.User).ThenInclude(x=>x.Classes).Load();
+            set.Include(x => x.Group).ThenInclude(x=>x.School).ThenInclude(x=>x.Classes).Load();
+            set.Include(x => x.Group).ThenInclude(x => x.School).ThenInclude(x => x.Groups).ThenInclude(x=>x.InvitedUsers).Load();
             return set;
         }
 

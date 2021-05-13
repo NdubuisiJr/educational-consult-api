@@ -3,15 +3,17 @@ using System;
 using EducationalConsultAPI.DBContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace EducationalConsultAPI.Migrations
 {
     [DbContext(typeof(EducationalDbContext))]
-    partial class EducationalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210510022048_addedInvitedUser")]
+    partial class addedInvitedUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
