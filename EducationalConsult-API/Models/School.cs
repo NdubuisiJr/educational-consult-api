@@ -9,6 +9,7 @@ namespace EducationalConsultAPI.Models {
         public string LogoUrl { get; set; }
         public string Country { get; set; }
         public string State { get; set; }
+        public double GreadeScale { get; set; }
 
         public virtual IList<Class> Classes { get; set; }
         public virtual IList<Group> Groups { get; set; }

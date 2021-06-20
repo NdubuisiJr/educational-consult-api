@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
 namespace EducationalConsultAPI.Dtos {
     /// <summary>
@@ -44,5 +45,16 @@ namespace EducationalConsultAPI.Dtos {
         [Required]
         public string State { get; set; }
 
+        /// <summary>
+        /// Schools offical grade scale
+        /// </summary>
+        /// 
+        [Required]
+        public double GradeScale { get; set; }
+
+        /// <summary>
+        /// Logo file
+        /// </summary>
+        public IFormFile File { get; set; }
     }
 }

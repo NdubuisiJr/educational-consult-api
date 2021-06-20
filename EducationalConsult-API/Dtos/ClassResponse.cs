@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace EducationalConsultAPI.Dtos {
     /// <summary>
@@ -14,5 +15,20 @@ namespace EducationalConsultAPI.Dtos {
         /// The name of the group
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// The Teacher for this class
+        /// </summary>
+        public UserClassResponse User { get; set; }
+
+        /// <summary>
+        /// The resources for this class
+        /// </summary>
+        public IList<ResourceResponse> Resources { get; set; }
+
+        /// <summary>
+        /// The Students in this class
+        /// </summary>
+        public virtual IList<StudentResponse> Students { get; set; }
     }
 }

@@ -26,6 +26,12 @@ namespace EducationalConsultAPI.Controllers {
             _communication = communication;
         }
 
+        /// <summary>
+        /// Accepts an invitation from a school
+        /// </summary>
+        /// <param name="groupId">The group the user is added</param>
+        /// <param name="email">The user's email</param>
+        /// <returns></returns>
         [HttpGet("accept")]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
@@ -66,7 +72,13 @@ namespace EducationalConsultAPI.Controllers {
 
         }
 
-
+        /// <summary>
+        /// Addeds a user to a group in a particular school
+        /// </summary>
+        /// <param name="userId">The admin user's Id</param>
+        /// <param name="schoolId">The shool's Id</param>
+        /// <param name="invitedUserRegistration">The request object</param>
+        /// <returns></returns>
         [HttpPost("{userId}/{schoolId}")]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

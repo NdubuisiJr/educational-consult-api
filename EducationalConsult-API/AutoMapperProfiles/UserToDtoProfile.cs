@@ -7,6 +7,7 @@ namespace EducationalConsultAPI.AutoMapperProfiles {
         public UserToDtoProfile() {
             CreateMap<UserRegistration, User>();
             CreateMap<User, UserResponse>();
+            CreateMap<User, UserClassResponse>();
         }
     }
 }

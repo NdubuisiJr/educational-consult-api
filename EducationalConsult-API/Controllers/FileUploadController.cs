@@ -24,7 +24,7 @@ namespace EducationalConsultAPI.Controllers {
         /// <param name="userId">User's Id</param>
         /// <param name="upload">The uploaded form</param>
         /// <returns></returns>
-        [HttpPost("image/{userId}")]
+        [HttpPost("dp/{userId}")]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

@@ -8,8 +8,6 @@
         public double GradePoint { get; set; }
         public string Remark { get; set; }
         public string Category { get; set; }
-        public double CGPA { get; set; }
-        public string Rank { get; set; }
 
         public virtual DailyReport DailyReport { get; set; }
     }

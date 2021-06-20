@@ -10,6 +10,7 @@ namespace EducationalConsultAPI.Models {
         public string GuardianEmail { get; set; }
         public string GuardianPhone { get; set; }
         public string Address { get; set; }
+        public double CGPA { get; set; }
 
         public virtual Class Class { get; set; }
         public virtual IList<DailyReport> DailyReports { get; set; }

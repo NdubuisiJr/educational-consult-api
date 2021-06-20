@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace EducationalConsultAPI.Controllers {
@@ -27,6 +28,12 @@ namespace EducationalConsultAPI.Controllers {
             _schoolRepository = schoolRepository;
         }
 
+        /// <summary>
+        /// Retrieves a user's school given school Id
+        /// </summary>
+        /// <param name="userId">The user's Id</param>
+        /// <param name="schoolId">The school's Id</param>
+        /// <returns></returns>
         [HttpGet("{schoolId}")]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
@@ -48,9 +55,6 @@ namespace EducationalConsultAPI.Controllers {
                 var schoolResponse = _mapper.Map<SchoolResponse>(school);
 
                 foreach (var group in schoolResponse.Groups) {
-                    if (group.Role == Roles.Parent)
-                        continue;
-
                     var users = _userGroupRespository.GetUsers(group.Id).OfType<User>().ToList();
                     var responses = _mapper.Map<IList<UserResponse>>(users);
                     group.Users.AddRange(responses);
@@ -75,7 +79,7 @@ namespace EducationalConsultAPI.Controllers {
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<Response<SchoolResponse>> CreateSchool (Guid userId, [FromBody] SchoolRegistration schoolRegistration) {
+        public ActionResult<Response<SchoolResponse>> CreateSchool (Guid userId, [FromForm] SchoolRegistration schoolRegistration) {
             try {
                 if (userId == Guid.Empty || schoolRegistration is null)
                     return BadRequest(new Response<object>(400, "Invalid inputs"));
@@ -91,6 +95,17 @@ namespace EducationalConsultAPI.Controllers {
                         .FirstOrDefault();
                 if (existing is { })
                     return UnprocessableEntity(new Response<object>(422, "School already exists"));
+
+                if(schoolRegistration.File is { }) {
+                    var fileName = $"/{DateTime.UtcNow.Ticks}_{schoolRegistration.File.FileName}";
+                    var path = Helpers.GetFilePath(fileName);
+
+                    using (var stream = new FileStream(path, FileMode.Create)) {
+                        schoolRegistration.File.CopyTo(stream);
+                    }
+
+                     school.LogoUrl = $"{Constants.BACKEND_BASE_URL}/{fileName}";
+                }
 
                 _schoolRepository.Add(school);
 

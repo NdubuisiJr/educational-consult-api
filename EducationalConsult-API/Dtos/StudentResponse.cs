@@ -1,11 +1,9 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 
 namespace EducationalConsultAPI.Dtos {
-    /// <summary>
-    /// The returned user object
-    /// </summary>
-    public class UserResponse {
+    public class StudentResponse {
         /// <summary>
         /// The user's unique Id
         /// </summary>
@@ -37,13 +35,41 @@ namespace EducationalConsultAPI.Dtos {
         public string ImageUrl { get; set; }
 
         /// <summary>
-        /// Authentication token
+        /// The student's age
         /// </summary>
-        public string Token { get; set; }
+        public byte Age { get; set; }
 
         /// <summary>
-        /// Collection of schools, this user has access to
+        /// The student's gender
         /// </summary>
-        public IList<SchoolResponse> Schools { get; set; }
+        public string Gender { get; set; }
+
+        /// <summary>
+        /// The student's current rank
+        /// </summary>
+        public string Rank { get; set; }
+
+        /// <summary>
+        /// The guadian's name
+        /// </summary>
+        public string GuardianName { get; set; }
+
+        /// <summary>
+        /// The guadian's email
+        /// </summary>
+        public string GuardianEmail { get; set; }
+
+        /// <summary>
+        /// The guadian's phone
+        /// </summary>
+        public string GuardianPhone { get; set; }
+
+        /// <summary>
+        /// The student's address
+        /// </summary>
+        public string Address { get; set; }
+
+
+        public virtual IList<DailyReportResponse> DailyReports { get; set; }
     }
 }

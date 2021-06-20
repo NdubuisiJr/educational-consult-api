@@ -3,15 +3,17 @@ using System;
 using EducationalConsultAPI.DBContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace EducationalConsultAPI.Migrations
 {
     [DbContext(typeof(EducationalDbContext))]
-    partial class EducationalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210513214848_addedGradeScale")]
+    partial class addedGradeScale
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,6 +28,9 @@ namespace EducationalConsultAPI.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<double>("Average")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("CGPA")
                         .HasColumnType("double precision");
 
                     b.Property<string>("Category")
@@ -45,6 +50,9 @@ namespace EducationalConsultAPI.Migrations
 
                     b.Property<double>("OverallScore")
                         .HasColumnType("double precision");
+
+                    b.Property<string>("Rank")
+                        .HasColumnType("text");
 
                     b.Property<string>("Remark")
                         .HasColumnType("text");
@@ -280,9 +288,6 @@ namespace EducationalConsultAPI.Migrations
 
                     b.Property<byte>("Age")
                         .HasColumnType("smallint");
-
-                    b.Property<double>("CGPA")
-                        .HasColumnType("double precision");
 
                     b.Property<Guid?>("ClassId")
                         .HasColumnType("uuid");

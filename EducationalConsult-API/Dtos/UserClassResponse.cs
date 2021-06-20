@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace EducationalConsultAPI.Dtos {
-    /// <summary>
-    /// The returned user object
-    /// </summary>
-    public class UserResponse {
+    public class UserClassResponse {
         /// <summary>
         /// The user's unique Id
         /// </summary>
@@ -40,10 +36,5 @@ namespace EducationalConsultAPI.Dtos {
         /// Authentication token
         /// </summary>
         public string Token { get; set; }
-
-        /// <summary>
-        /// Collection of schools, this user has access to
-        /// </summary>
-        public IList<SchoolResponse> Schools { get; set; }
     }
 }

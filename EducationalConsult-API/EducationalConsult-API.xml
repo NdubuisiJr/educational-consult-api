@@ -4,12 +4,38 @@
         <name>EducationalConsult-API</name>
     </assembly>
     <members>
+        <member name="M:EducationalConsultAPI.Controllers.ClassController.CreateClass(System.Guid,System.Guid,System.String)">
+            <summary>
+            Creates a new class. 
+            </summary>
+            <param name="userId">The admin Teacher's Id</param>
+            <param name="schoolId">The school Id</param>
+            <param name="name">The class name</param>
+            <returns></returns>
+        </member>
         <member name="M:EducationalConsultAPI.Controllers.FileUploadController.UploadImage(System.Guid,EducationalConsultAPI.Dtos.FileUpload)">
             <summary>
             Uploads user's profile picture
             </summary>
             <param name="userId">User's Id</param>
             <param name="upload">The uploaded form</param>
+            <returns></returns>
+        </member>
+        <member name="M:EducationalConsultAPI.Controllers.GroupController.Accept(System.Guid,System.String)">
+            <summary>
+            Accepts an invitation from a school
+            </summary>
+            <param name="groupId">The group the user is added</param>
+            <param name="email">The user's email</param>
+            <returns></returns>
+        </member>
+        <member name="M:EducationalConsultAPI.Controllers.GroupController.AddUser(System.Guid,System.Guid,EducationalConsultAPI.Dtos.InvitedUserRegistration)">
+            <summary>
+            Addeds a user to a group in a particular school
+            </summary>
+            <param name="userId">The admin user's Id</param>
+            <param name="schoolId">The shool's Id</param>
+            <param name="invitedUserRegistration">The request object</param>
             <returns></returns>
         </member>
         <member name="M:EducationalConsultAPI.Controllers.LoginController.ForgotPassword(System.String)">
@@ -24,6 +50,14 @@
             Performs user authentication and returns an authentication token
             </summary>
             <param name="login">The login object</param>
+            <returns></returns>
+        </member>
+        <member name="M:EducationalConsultAPI.Controllers.SchoolController.GetSchool(System.Guid,System.Guid)">
+            <summary>
+            Retrieves a user's school given school Id
+            </summary>
+            <param name="userId">The user's Id</param>
+            <param name="schoolId">The school's Id</param>
             <returns></returns>
         </member>
         <member name="M:EducationalConsultAPI.Controllers.SchoolController.CreateSchool(System.Guid,EducationalConsultAPI.Dtos.SchoolRegistration)">
@@ -49,6 +83,13 @@
             <param name="userRegistration">Manages the entire required field</param>
             <returns></returns>
         </member>
+        <member name="M:EducationalConsultAPI.Controllers.UserController.GetUser(System.Guid)">
+            <summary>
+            Retrieves a user with a given Id
+            </summary>
+            <param name="userId">The user's unique Id</param>
+            <returns></returns>
+        </member>
         <member name="M:EducationalConsultAPI.Controllers.UserController.ChangePassword(System.Guid,System.String)">
             <summary>
             Changes a user's password
@@ -56,6 +97,46 @@
             <param name="userId">The user's unique Id</param>
             <param name="password">The new password</param>
             <returns></returns>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.ActivityResponse.Name">
+            <summary>
+            The activity Name
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.ActivityResponse.Score">
+            <summary>
+            The score
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.ActivityResponse.OverallScore">
+            <summary>
+            The overall score
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.ActivityResponse.Average">
+            <summary>
+            The grade point Average
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.ActivityResponse.Grade">
+            <summary>
+            The grade
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.ActivityResponse.GradePoint">
+            <summary>
+            The grade point
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.ActivityResponse.Remark">
+            <summary>
+            The grade remark
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.ActivityResponse.Category">
+            <summary>
+            The category of this activity
+            </summary>
         </member>
         <member name="T:EducationalConsultAPI.Dtos.ClassResponse">
             <summary>
@@ -70,6 +151,46 @@
         <member name="P:EducationalConsultAPI.Dtos.ClassResponse.Name">
             <summary>
             The name of the group
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.ClassResponse.User">
+            <summary>
+            The Teacher for this class
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.ClassResponse.Resources">
+            <summary>
+            The resources for this class
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.ClassResponse.Students">
+            <summary>
+            The Students in this class
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.DailyReportResponse.Term">
+            <summary>
+            The current term for this report
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.DailyReportResponse.Date">
+            <summary>
+            The date of filling
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.DailyReportResponse.TermStartDate">
+            <summary>
+            The term start date
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.DailyReportResponse.TermEndDate">
+            <summary>
+            The term end date
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.DailyReportResponse.Activities">
+            <summary>
+            The activity for this day
             </summary>
         </member>
         <member name="T:EducationalConsultAPI.Dtos.GroupResponse">
@@ -128,6 +249,21 @@
             The invited user's role
             </summary>
         </member>
+        <member name="P:EducationalConsultAPI.Dtos.ResourceResponse.Link">
+            <summary>
+            Link to the resource
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.ResourceResponse.Title">
+            <summary>
+            Title of the resource
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.ResourceResponse.Type">
+            <summary>
+            Type of the resource = note, assignment, videos
+            </summary>
+        </member>
         <member name="T:EducationalConsultAPI.Dtos.SchoolRegistration">
             <summary>
             This is the form for creating a new school
@@ -165,6 +301,17 @@
             State where the head quarter resides
             </summary>
             
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.SchoolRegistration.GradeScale">
+            <summary>
+            Schools offical grade scale
+            </summary>
+            
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.SchoolRegistration.File">
+            <summary>
+            Logo file
+            </summary>
         </member>
         <member name="P:EducationalConsultAPI.Dtos.SchoolResponse.Id">
             <summary>
@@ -214,6 +361,106 @@
         <member name="P:EducationalConsultAPI.Dtos.SchoolResponse.Groups">
             <summary>
             All the groups in the school
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.StudentResponse.Id">
+            <summary>
+            The user's unique Id
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.StudentResponse.Surname">
+            <summary>
+            The user's Surname
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.StudentResponse.OtherNames">
+            <summary>
+            The user's other names
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.StudentResponse.Email">
+            <summary>
+            The user's email address
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.StudentResponse.Phone">
+            <summary>
+            The user's phone number.
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.StudentResponse.ImageUrl">
+            <summary>
+            The user's profile picture
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.StudentResponse.Age">
+            <summary>
+            The student's age
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.StudentResponse.Gender">
+            <summary>
+            The student's gender
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.StudentResponse.Rank">
+            <summary>
+            The student's current rank
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.StudentResponse.GuardianName">
+            <summary>
+            The guadian's name
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.StudentResponse.GuardianEmail">
+            <summary>
+            The guadian's email
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.StudentResponse.GuardianPhone">
+            <summary>
+            The guadian's phone
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.StudentResponse.Address">
+            <summary>
+            The student's address
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.UserClassResponse.Id">
+            <summary>
+            The user's unique Id
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.UserClassResponse.Surname">
+            <summary>
+            The user's Surname
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.UserClassResponse.OtherNames">
+            <summary>
+            The user's other names
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.UserClassResponse.Email">
+            <summary>
+            The user's email address
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.UserClassResponse.Phone">
+            <summary>
+            The user's phone number.
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.UserClassResponse.ImageUrl">
+            <summary>
+            The user's profile picture
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.UserClassResponse.Token">
+            <summary>
+            Authentication token
             </summary>
         </member>
         <member name="T:EducationalConsultAPI.Dtos.UserLogin">
@@ -309,9 +556,9 @@
             Authentication token
             </summary>
         </member>
-        <member name="P:EducationalConsultAPI.Dtos.UserResponse.Classes">
+        <member name="P:EducationalConsultAPI.Dtos.UserResponse.Schools">
             <summary>
-            Collection of classes created by this user
+            Collection of schools, this user has access to
             </summary>
         </member>
     </members>
