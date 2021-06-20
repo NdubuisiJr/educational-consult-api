@@ -83,6 +83,14 @@
             <param name="userRegistration">Manages the entire required field</param>
             <returns></returns>
         </member>
+        <member name="M:EducationalConsultAPI.Controllers.UserController.UpdateUser(System.Guid,EducationalConsultAPI.Dtos.UserUpdateDto)">
+            <summary>
+            Update user details
+            </summary>
+            <param name="userId">The user's unique Id</param>
+            <param name="userUpdateDto">update model for user details</param>
+            <returns></returns>
+        </member>
         <member name="M:EducationalConsultAPI.Controllers.UserController.GetUser(System.Guid)">
             <summary>
             Retrieves a user with a given Id
@@ -90,7 +98,7 @@
             <param name="userId">The user's unique Id</param>
             <returns></returns>
         </member>
-        <member name="M:EducationalConsultAPI.Controllers.UserController.ChangePassword(System.Guid,System.String)">
+        <member name="M:EducationalConsultAPI.Controllers.UserController.ChangePassword(System.Guid,EducationalConsultAPI.Dtos.ResetPasswordDto)">
             <summary>
             Changes a user's password
             </summary>
@@ -247,6 +255,21 @@
         <member name="P:EducationalConsultAPI.Dtos.InvitedUserResponse.Role">
             <summary>
             The invited user's role
+            </summary>
+        </member>
+        <member name="T:EducationalConsultAPI.Dtos.ResetPasswordDto">
+            <summary>
+            Model for changing password
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.ResetPasswordDto.OldPassword">
+            <summary>
+            The old password
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.ResetPasswordDto.NewPassword">
+            <summary>
+            The new Password
             </summary>
         </member>
         <member name="P:EducationalConsultAPI.Dtos.ResourceResponse.Link">
@@ -559,6 +582,28 @@
         <member name="P:EducationalConsultAPI.Dtos.UserResponse.Schools">
             <summary>
             Collection of schools, this user has access to
+            </summary>
+        </member>
+        <member name="T:EducationalConsultAPI.Dtos.UserUpdateDto">
+            <summary>
+            model for upating user details
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.UserUpdateDto.Surname">
+            <summary>
+            The user's Surname
+            </summary>
+            
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.UserUpdateDto.OtherNames">
+            <summary>
+            The user's other names
+            </summary>
+            
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.UserUpdateDto.Phone">
+            <summary>
+            The user's phone number.
             </summary>
         </member>
     </members>

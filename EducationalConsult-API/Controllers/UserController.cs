@@ -26,6 +26,39 @@ namespace EducationalConsultAPI.Controllers {
         }
 
         /// <summary>
+        /// Update user details
+        /// </summary>
+        /// <param name="userId">The user's unique Id</param>
+        /// <param name="userUpdateDto">update model for user details</param>
+        /// <returns></returns>
+        [HttpPatch("{userId}")]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IActionResult UpdateUser(Guid userId, [FromBody] UserUpdateDto userUpdateDto) {
+            try {
+                if (userUpdateDto is null || userId == Guid.Empty)
+                    return BadRequest(new Response<object>(400, "auth failed"));
+
+                var user = _userRepository.Get(userId);
+
+                if (user is null)
+                    return BadRequest(new Response<object>(400, "auth failed"));
+
+                user.Phone = userUpdateDto.Phone;
+                user.Surname = userUpdateDto.Surname;
+                user.OtherNames = userUpdateDto.OtherNames;
+
+                _userRepository.Update(user);
+                _userRepository.SaveChanges();
+                return Ok(new Response<object>(200, "Update completed successfully"));
+            }
+            catch (Exception) {
+                return StatusCode(500, new Response<object>(500, "Something went wrong, It's our fault not yours"));
+            }
+        }
+
+        /// <summary>
         /// Retrieves a user with a given Id
         /// </summary>
         /// <param name="userId">The user's unique Id</param>
@@ -35,30 +68,35 @@ namespace EducationalConsultAPI.Controllers {
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<Response<UserResponse>> GetUser(Guid userId) {
-            if (userId == Guid.Empty)
-                return BadRequest(new Response<object>(400, "Invalid Id"));
+            try {
+                if (userId == Guid.Empty)
+                    return BadRequest(new Response<object>(400, "Invalid Id"));
 
-            var user = _userRepository.Get(userId);
-            if (user is null)
-                return NotFound(new Response<object>(404, "User not found"));
+                var user = _userRepository.Get(userId);
+                if (user is null)
+                    return NotFound(new Response<object>(404, "User not found"));
 
-            var userResponse = _mapper.Map<UserResponse>(user);
-            var schools = _userGroupRepository.GetGroups(userId)
-                           .OfType<Group>()
-                           .Select(x => x.School);
+                var userResponse = _mapper.Map<UserResponse>(user);
+                var schools = _userGroupRepository.GetGroups(userId)
+                               .OfType<Group>()
+                               .Select(x => x.School);
 
-            var schoolResponses = _mapper.Map<IList<SchoolResponse>>(schools);
+                var schoolResponses = _mapper.Map<IList<SchoolResponse>>(schools);
 
-            foreach (var schoolResponse in schoolResponses) {
-                foreach (var group in schoolResponse.Groups) { //count is 3
-                    var users = _userGroupRepository.GetUsers(group.Id).OfType<User>();
-                    var responses = _mapper.Map<IList<UserResponse>>(users);
-                    group.Users.AddRange(responses);
+                foreach (var schoolResponse in schoolResponses) {
+                    foreach (var group in schoolResponse.Groups) { //count is 3
+                        var users = _userGroupRepository.GetUsers(group.Id).OfType<User>();
+                        var responses = _mapper.Map<IList<UserResponse>>(users);
+                        group.Users.AddRange(responses);
+                    }
                 }
-            }
 
-            userResponse.Schools = schoolResponses;
-            return Ok(new Response<UserResponse>(200, "okay", userResponse));
+                userResponse.Schools = schoolResponses;
+                return Ok(new Response<UserResponse>(200, "okay", userResponse));
+            }
+            catch (Exception) {
+                return StatusCode(500, new Response<object>(500, "Something went wrong, It's our fault not yours"));
+            }
         }
 
         /// <summary>
@@ -71,7 +109,7 @@ namespace EducationalConsultAPI.Controllers {
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public IActionResult ChangePassword(Guid userId, [FromQuery]string password) {
+        public IActionResult ChangePassword(Guid userId, [FromBody]ResetPasswordDto password) {
             try {
                 if (password is null || userId == Guid.Empty)
                     return BadRequest(new Response<object>(400, "auth failed"));
@@ -81,7 +119,10 @@ namespace EducationalConsultAPI.Controllers {
                 if (user is null)
                     return BadRequest(new Response<object>(400, "auth failed"));
 
-                var passData = _securityService.HashPassword(password);
+                if (!_securityService.VerifyPassword(password.OldPassword, user.PasswordHash, user.PasswordSalt))
+                    return BadRequest(new Response<object>(400, "Old password is wrong"));
+
+                var passData = _securityService.HashPassword(password.NewPassword);
                 user.PasswordSalt = passData.Item1;
                 user.PasswordHash = passData.Item2;
 
