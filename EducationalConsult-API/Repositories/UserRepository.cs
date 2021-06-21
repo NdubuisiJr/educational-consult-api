@@ -29,6 +29,7 @@ namespace EducationalConsultAPI.Repositories {
             var user = _dbContext.Users.Find(Id);
             if (user != null) {
                 _dbContext.Entry(user).Collection(x => x.Classes).Load();
+                if (user.Classes is null) return user;
                 foreach (var clss in user.Classes) {
                     _dbContext.Entry(clss).Collection(x => x.Resources).Load();
                     _dbContext.Entry(clss).Collection(x => x.Students).Load();

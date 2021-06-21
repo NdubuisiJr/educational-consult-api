@@ -18,9 +18,10 @@ namespace EducationalConsultAPI.Controllers {
 
         public SignupController(
             IMapper mapper, IRepository<User> userRepository, ISecurityService securityService,
-            ICommunication communication) {
+            ICommunication communication, IRepository<Student> studentRepository) {
             _mapper = mapper;
             _userRepository = userRepository;
+            _studentRepository = studentRepository;
             _securityService = securityService;
             _communication = communication;
         }
@@ -73,10 +74,16 @@ namespace EducationalConsultAPI.Controllers {
                 if (userRegistration is null)
                     return BadRequest(new Response<UserResponse>(400, "The body is null"));
 
-                var user = _mapper.Map<User>(userRegistration);
+                var user = userRegistration.IsStudent ?
+                    _mapper.Map<Student>(userRegistration) :
+                    _mapper.Map<User>(userRegistration);
 
-                var existing = _userRepository.GetAll()
-                    .FirstOrDefault(x => x.Email.Trim().ToLower() == user.Email.Trim().ToLower() || x.Phone.Trim() == user.Phone.Trim());
+                var existing = userRegistration.IsStudent ?
+                    _studentRepository.GetAll().FirstOrDefault(x => x.Email.Trim().ToLower() == 
+                    user.Email.Trim().ToLower() || x.Phone.Trim() == user.Phone.Trim())
+                    :
+                    _userRepository.GetAll().FirstOrDefault(x => x.Email.Trim().ToLower() == 
+                    user.Email.Trim().ToLower() || x.Phone.Trim() == user.Phone.Trim());
 
                 if (existing is { })
                     return BadRequest(new Response<UserResponse>(400, "A user with the same email or phone already exists"));
@@ -99,7 +106,7 @@ namespace EducationalConsultAPI.Controllers {
 
                     var result = _communication.SendEmail(user.Email, "Verify Email", html);
                     if (!result)
-                        return BadRequest(new Response<UserResponse>(400, "Unable to send verification email"));
+                        return BadRequest(new Response<UserResponse>(400, "Unable to send verification email. Please try again"));
                 }
 
                 _userRepository.Add(user);
@@ -118,6 +125,7 @@ namespace EducationalConsultAPI.Controllers {
 
         private readonly IMapper _mapper;
         private readonly IRepository<User> _userRepository;
+        private readonly IRepository<Student> _studentRepository;
         private readonly ISecurityService _securityService;
         private readonly ICommunication _communication;
     }

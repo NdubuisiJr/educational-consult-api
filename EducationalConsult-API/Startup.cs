@@ -125,8 +125,9 @@ namespace EducationalConsultAPI {
             services.AddScoped<IRepository<User>, UserRepository>();
             services.AddScoped<IRepository<Group>, GroupRepository>();
             services.AddScoped<IRepository<School>, SchoolRepository>();
-            services.AddScoped<IJoinRepository<UserGroup>, UserGroupRepository>();
             services.AddScoped<IRepository<Class>, ClassRepository>();
+            services.AddScoped<IRepository<Student>, StudentRepository>();
+            services.AddScoped<IJoinRepository<UserGroup>, UserGroupRepository>();
             services.AddScoped<ICommunication, Communication>();
 
             //Add swagger setup
@@ -185,7 +186,7 @@ namespace EducationalConsultAPI {
             var host = Environment.GetEnvironmentVariable("HOST") ?? "localhost";
             var userId = Environment.GetEnvironmentVariable("USER_ID") ?? "postgres";
             var userPassword = Environment.GetEnvironmentVariable("USER_PASSWORD") ?? "test";
-            var database = "studentDb"; //"educationalconsultDB";
+            var database = "educationalconsultDB";
             var connection = $"User ID={userId};Password={userPassword};Server={host};Port=5432;Database={database};Integrated Security=true;Pooling=true;";
             return connection;
         }

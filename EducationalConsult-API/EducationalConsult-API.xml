@@ -21,12 +21,13 @@
             <param name="upload">The uploaded form</param>
             <returns></returns>
         </member>
-        <member name="M:EducationalConsultAPI.Controllers.GroupController.Accept(System.Guid,System.String)">
+        <member name="M:EducationalConsultAPI.Controllers.GroupController.Accept(System.Guid,System.String,System.Boolean)">
             <summary>
             Accepts an invitation from a school
             </summary>
             <param name="groupId">The group the user is added</param>
             <param name="email">The user's email</param>
+            <param name="IsStudent">is student flag</param>
             <returns></returns>
         </member>
         <member name="M:EducationalConsultAPI.Controllers.GroupController.AddUser(System.Guid,System.Guid,EducationalConsultAPI.Dtos.InvitedUserRegistration)">
@@ -81,6 +82,13 @@
             Register's a new user
             </summary>
             <param name="userRegistration">Manages the entire required field</param>
+            <returns></returns>
+        </member>
+        <member name="M:EducationalConsultAPI.Controllers.StudentController.GetStudent(System.Guid)">
+            <summary>
+            Retrieve a student's data
+            </summary>
+            <param name="studentId">The student's Id</param>
             <returns></returns>
         </member>
         <member name="M:EducationalConsultAPI.Controllers.UserController.UpdateUser(System.Guid,EducationalConsultAPI.Dtos.UserUpdateDto)">
@@ -174,6 +182,26 @@
         <member name="P:EducationalConsultAPI.Dtos.ClassResponse.Students">
             <summary>
             The Students in this class
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.ClassResponseForStudent.Id">
+            <summary>
+            The Id of the class
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.ClassResponseForStudent.Name">
+            <summary>
+            The name of the group
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.ClassResponseForStudent.User">
+            <summary>
+            The Teacher for this class
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.ClassResponseForStudent.Resources">
+            <summary>
+            The resources for this class
             </summary>
         </member>
         <member name="P:EducationalConsultAPI.Dtos.DailyReportResponse.Term">
@@ -451,6 +479,86 @@
             The student's address
             </summary>
         </member>
+        <member name="P:EducationalConsultAPI.Dtos.StudentResponse.DailyReports">
+            <summary>
+            List of daily reports for this student
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.StudentResponseMain.Id">
+            <summary>
+            The user's unique Id
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.StudentResponseMain.Surname">
+            <summary>
+            The user's Surname
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.StudentResponseMain.OtherNames">
+            <summary>
+            The user's other names
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.StudentResponseMain.Email">
+            <summary>
+            The user's email address
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.StudentResponseMain.Phone">
+            <summary>
+            The user's phone number.
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.StudentResponseMain.ImageUrl">
+            <summary>
+            The user's profile picture
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.StudentResponseMain.Age">
+            <summary>
+            The student's age
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.StudentResponseMain.Gender">
+            <summary>
+            The student's gender
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.StudentResponseMain.Rank">
+            <summary>
+            The student's current rank
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.StudentResponseMain.GuardianName">
+            <summary>
+            The guadian's name
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.StudentResponseMain.GuardianEmail">
+            <summary>
+            The guadian's email
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.StudentResponseMain.GuardianPhone">
+            <summary>
+            The guadian's phone
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.StudentResponseMain.Address">
+            <summary>
+            The student's address
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.StudentResponseMain.Class">
+            <summary>
+            The student's current class
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.StudentResponseMain.DailyReports">
+            <summary>
+            List of daily reports for this student
+            </summary>
+        </member>
         <member name="P:EducationalConsultAPI.Dtos.UserClassResponse.Id">
             <summary>
             The user's unique Id
@@ -479,11 +587,6 @@
         <member name="P:EducationalConsultAPI.Dtos.UserClassResponse.ImageUrl">
             <summary>
             The user's profile picture
-            </summary>
-        </member>
-        <member name="P:EducationalConsultAPI.Dtos.UserClassResponse.Token">
-            <summary>
-            Authentication token
             </summary>
         </member>
         <member name="T:EducationalConsultAPI.Dtos.UserLogin">
@@ -537,6 +640,11 @@
         <member name="P:EducationalConsultAPI.Dtos.UserRegistration.Redirect">
             <summary>
             An optional redirect url
+            </summary>
+        </member>
+        <member name="P:EducationalConsultAPI.Dtos.UserRegistration.IsStudent">
+            <summary>
+            An optional flag for students
             </summary>
         </member>
         <member name="T:EducationalConsultAPI.Dtos.UserResponse">

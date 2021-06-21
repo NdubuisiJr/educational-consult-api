@@ -1,5 +1,4 @@
-﻿
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace EducationalConsultAPI.Dtos {
     /// <summary>
@@ -44,6 +43,11 @@ namespace EducationalConsultAPI.Dtos {
         /// An optional redirect url
         /// </summary>
         public string Redirect { get; set; }
+
+        /// <summary>
+        /// An optional flag for students
+        /// </summary>
+        public bool IsStudent { get; set; }
 
     }
 }

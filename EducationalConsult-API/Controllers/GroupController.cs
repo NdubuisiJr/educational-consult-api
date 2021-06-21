@@ -17,12 +17,14 @@ namespace EducationalConsultAPI.Controllers {
     [Route("/api/group")]
     public class GroupController : ControllerBase {
 
-        public GroupController(IMapper mapper, IRepository<User> repository, ICommunication communication,
-            IRepository<Group> groupRepository, IJoinRepository<UserGroup> userGroupRepository ) {
+        public GroupController(IMapper mapper, IRepository<User> repository, 
+            ICommunication communication, IRepository<Group> groupRepository, 
+            IRepository<Student> studentRepository,IJoinRepository<UserGroup> userGroupRepository ) {
             _mapper = mapper;
             _userRepository = repository;
             _groupRepository = groupRepository;
             _userGroupRepository = userGroupRepository;
+            _studentRepository = studentRepository;
             _communication = communication;
         }
 
@@ -31,6 +33,7 @@ namespace EducationalConsultAPI.Controllers {
         /// </summary>
         /// <param name="groupId">The group the user is added</param>
         /// <param name="email">The user's email</param>
+        /// <param name="IsStudent">is student flag</param>
         /// <returns></returns>
         [HttpGet("accept")]
         [AllowAnonymous]
@@ -38,7 +41,7 @@ namespace EducationalConsultAPI.Controllers {
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status302Found)]
-        public IActionResult Accept([FromQuery] Guid groupId, [FromQuery]string email) {
+        public IActionResult Accept([FromQuery] Guid groupId, [FromQuery]string email, [FromQuery]bool IsStudent=false) {
             try {
                 if (groupId == Guid.Empty || string.IsNullOrWhiteSpace(email))
                     return BadRequest(new Response<object>(400, "Invalid input"));
@@ -47,11 +50,17 @@ namespace EducationalConsultAPI.Controllers {
                 if (group is null)
                     return BadRequest(new Response<object>(400, "Invalid group selected"));
 
-                var user = _userRepository.GetAll()
+                var user = IsStudent ?
+                        _studentRepository.GetAll()
+                        .Where(x=>x.Email.Trim().ToLower()==email.Trim().ToLower())
+                        .FirstOrDefault()   
+                        :
+                        _userRepository.GetAll()
                         .Where(x => x.Email.Trim().ToLower() == email.Trim().ToLower())
                         .FirstOrDefault();
+
                 if (user is null)
-                    return Redirect($"{FRONTEND_BASE_URL}/signup?count=0&redirect={$"{BACKEND_BASE_URL}/api/group/accept?groupId={groupId}&email={email}"}");
+                    return Redirect($"{FRONTEND_BASE_URL}/signup?count=0isStudent={IsStudent}&redirect={$"{BACKEND_BASE_URL}/api/group/accept?groupId={groupId}&email={email}&isStudent={IsStudent}"}");
 
                 var existing = group.InvitedUsers.FirstOrDefault(x => x.Email.Trim().ToLower() == email.Trim().ToLower());
                 if (existing is null)
@@ -130,6 +139,7 @@ namespace EducationalConsultAPI.Controllers {
                 }
 
                 var url = $"{BACKEND_BASE_URL}/api/group/accept?groupId={group.Id}&email={invitedUserRegistration.Email.Trim()}";
+                url = invitedUserRegistration.Role.Trim() == Roles.Parent ? $"{url}&isStudent=true" : url;
                 var emailPath = Helpers.GetFilePath("/invitation.html");
                 var html = ReadAllText(emailPath);
                 html = html.Replace("{{action_url}}", url);
@@ -161,6 +171,7 @@ namespace EducationalConsultAPI.Controllers {
         private readonly IRepository<User> _userRepository;
         private readonly IRepository<Group> _groupRepository;
         private readonly IJoinRepository<UserGroup> _userGroupRepository;
+        private readonly IRepository<Student> _studentRepository;
         private readonly ICommunication _communication;
     }
 }

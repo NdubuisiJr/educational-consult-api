@@ -32,9 +32,5 @@ namespace EducationalConsultAPI.Dtos {
         /// </summary>
         public string ImageUrl { get; set; }
 
-        /// <summary>
-        /// Authentication token
-        /// </summary>
-        public string Token { get; set; }
     }
 }

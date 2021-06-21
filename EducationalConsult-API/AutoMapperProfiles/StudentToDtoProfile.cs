@@ -6,6 +6,7 @@ namespace EducationalConsultAPI.AutoMapperProfiles {
     public class StudentToDtoProfile : Profile {
         public StudentToDtoProfile() {
             CreateMap<Student, StudentResponse>();
+            CreateMap<Student, StudentResponseMain>();
         }
     }
 }
