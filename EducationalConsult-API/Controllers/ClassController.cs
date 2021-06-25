@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace EducationalConsultAPI.Controllers {
@@ -15,13 +16,58 @@ namespace EducationalConsultAPI.Controllers {
     [Route("/api/class/{userId}")]
     public class ClassController : ControllerBase{
 
-        public ClassController(IMapper mapper, IRepository<Class> classRepository, IJoinRepository<UserGroup> userGroupRepository,
-            IRepository<User> userRepository, IRepository<School> schoolRepository) {
+        public ClassController(IMapper mapper, IRepository<Class> classRepository, 
+            IJoinRepository<UserGroup> userGroupRepository, IRepository<User> userRepository, 
+            IRepository<School> schoolRepository) {
             _mapper = mapper;
             _classRepository = classRepository;
             _userRepository = userRepository;
             _schoolRepository = schoolRepository;
             _userGroupRepository = userGroupRepository;
+        }
+
+        /// <summary>
+        /// Returns a class witht the given Id
+        /// </summary>
+        /// <param name="userId">user's id</param>
+        /// <param name="classId">class id</param>
+        /// <returns></returns>
+        [HttpGet("{classId}")]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult<ClassResponse> GetClass(Guid userId, Guid classId) {
+            try {
+                if (userId == Guid.Empty || classId == Guid.Empty)
+                    return BadRequest(new Response<object>(400, "Invalid input"));
+
+                var user = _userRepository.Get(userId);
+                if (user is null)
+                    return NotFound(new Response<object>(404, "User not found"));
+
+                var class_ = _classRepository.Get(classId);
+                if(class_ is null)
+                    return NotFound(new Response<object>(404, "User not found"));
+
+                var role = string.Empty;
+                var students = new List<Student>();
+                foreach (var group in class_.School.Groups) {
+                    var users = _userGroupRepository.GetUsers(group.Id).OfType<User>().ToList();
+                    if(role == string.Empty)
+                        role = users.FirstOrDefault(x => x.Id == userId) is { } ? group.Role : string.Empty;
+                    if (group.Role == Roles.Parent)
+                        students.AddRange(users.OfType<Student>());
+                }
+                var classResponse = _mapper.Map<ClassResponse>(class_);
+                var studentResponse = _mapper.Map<IEnumerable<StudentResponse>>(students);
+                return StatusCode(200, new Response<object>(200, "okay", new { role, studentResponse, classResponse }));
+
+            }
+            catch (Exception) {
+                return StatusCode(500, new Response<object>(500, "Something went wrong, It's our fault not yours"));
+            }
         }
 
         /// <summary>

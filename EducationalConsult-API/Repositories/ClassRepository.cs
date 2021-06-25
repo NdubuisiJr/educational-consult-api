@@ -30,6 +30,7 @@ namespace EducationalConsultAPI.Repositories {
             _dbContext.Entry(item).Reference(x => x.School).Load();
             _dbContext.Entry(item).Collection(x => x.Resources).Load();
             _dbContext.Entry(item).Collection(x => x.Students).Load();
+            _dbContext.Entry(item.School).Collection(x => x.Groups).Load();
             return item;
         }
 

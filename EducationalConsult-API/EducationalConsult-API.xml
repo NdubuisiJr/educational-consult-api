@@ -4,6 +4,14 @@
         <name>EducationalConsult-API</name>
     </assembly>
     <members>
+        <member name="M:EducationalConsultAPI.Controllers.ClassController.GetClass(System.Guid,System.Guid)">
+            <summary>
+            Returns a class witht the given Id
+            </summary>
+            <param name="userId">user's id</param>
+            <param name="classId">class id</param>
+            <returns></returns>
+        </member>
         <member name="M:EducationalConsultAPI.Controllers.ClassController.CreateClass(System.Guid,System.Guid,System.String)">
             <summary>
             Creates a new class. 
